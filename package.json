@@ -1,0 +1,24 @@
+{
+  "name": "his-backend",
+  "version": "1.0.0",
+  "description": "医院门诊挂号管理子系统（HIS）后端",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node src/seed/seed.js"
+  },
+  "keywords": [
+    "HIS",
+    "hospital",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^18.0.9",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3"
+  }
+}
