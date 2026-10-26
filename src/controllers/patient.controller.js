@@ -16,6 +16,11 @@ const createRegistration = (req, res) => {
   if (schedule.status !== 'AVAILABLE') return fail(res, '该号源已停诊', 400);
   if (schedule.remaining_num <= 0) return fail(res, '号源已满', 400);
 
+  const dup = mockDb.findOne('registrations',
+    (r) => r.patient_id === patient.id
+      && (r.status === 'WAITING' || r.status === 'CONSULTING'));
+  if (dup) return fail(res, '您已挂号，请勿重复挂号', 400);
+
   schedule.remaining_num -= 1; // 校验 + 扣减同步完成，防超卖
 
   const registration = mockDb.insert('registrations', {
