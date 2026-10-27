@@ -3,7 +3,8 @@
 # ============================================================
 
 # ---------- 阶段 1：build（用 Node 把 Vue 源码打包成静态文件）----------
-FROM node:18-alpine AS build
+# 前端 Vite 8 要求 Node >= 20.19 / >= 22.12，故用 node:22
+FROM node:22-alpine AS build
 
 WORKDIR /app
 
