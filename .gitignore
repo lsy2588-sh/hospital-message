@@ -2,3 +2,14 @@ node_modules/
 .env
 *.log
 .DS_Store
+
+# IDE 配置
+.idea/
+.vscode/
+
+# 敏感信息 / 临时文件（安全加固 S6）
+PATIENT_TOKEN
+*.pid
+
+# 前端构建产物
+his-frontend/dist/
