@@ -4,7 +4,9 @@ import router from '@/router'
 import { clearSession } from '@/stores/auth'
 
 const http = axios.create({
-  baseURL: '/api',
+  // 后端基础地址：部署时通过环境变量 VITE_API_BASE_URL 指定（如 https://xxx.glitch.me/api）
+  // 本地开发留空，走 vite.config.js 的 /api 代理
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
   timeout: 15000,
 })
 
