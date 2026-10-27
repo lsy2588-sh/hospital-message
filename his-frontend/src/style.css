@@ -1,0 +1,261 @@
+﻿:root {
+  --his-primary: #1e6fd9;
+  --his-primary-dark: #1558b0;
+  --his-primary-soft: #e8f1fd;
+  --his-bg: #f3f7fd;
+  --his-text: #1f2d3d;
+  --his-text-muted: #64748b;
+  --his-border: #e2e8f0;
+  --his-sidebar: #0e2542;
+  --his-radius: 14px;
+
+  --el-color-primary: #1e6fd9;
+  --el-color-primary-light-3: #5b96e6;
+  --el-color-primary-light-5: #8fb8ef;
+  --el-color-primary-light-7: #c2d8f7;
+  --el-color-primary-light-8: #d6e5fa;
+  --el-color-primary-light-9: #eaf2fd;
+  --el-color-primary-dark-2: #1857ab;
+  --el-border-radius-base: 8px;
+  --el-font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  font-family: var(--el-font-family);
+  color: var(--his-text);
+  background: var(--his-bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  min-width: 360px;
+  font-size: 14px;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c7d5e8;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: page-in 0.28s ease;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page-head h2 {
+  position: relative;
+  padding-left: 14px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--his-text);
+  line-height: 1.3;
+}
+
+.page-head h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, #3b82f6, #1e6fd9);
+}
+
+.page-head p {
+  padding-left: 14px;
+  color: var(--his-text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--his-border);
+  border-radius: var(--his-radius);
+  padding: 18px;
+  box-shadow: 0 1px 2px rgba(15, 37, 66, 0.04);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--his-text);
+  margin-bottom: 14px;
+}
+
+.section-title .el-icon {
+  color: var(--his-primary);
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.toolbar-left {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.muted {
+  color: var(--his-text-muted);
+  font-size: 13px;
+}
+
+.money {
+  color: #c2410c;
+  font-weight: 600;
+}
+
+/* Element Plus 细节统一 */
+.el-button {
+  font-weight: 500;
+}
+
+.el-table {
+  --el-table-header-bg-color: #f5f9ff;
+  --el-table-header-text-color: #33475f;
+  --el-table-row-hover-bg-color: #f2f7ff;
+  --el-table-border-color: var(--his-border);
+  font-size: 13px;
+}
+
+.el-table th.el-table__cell {
+  font-weight: 600;
+}
+
+.el-table .el-table__cell {
+  padding: 10px 0;
+}
+
+.el-table__empty-block {
+  min-height: 140px;
+}
+
+.el-dialog {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.el-dialog__header {
+  margin-right: 0;
+  padding: 20px 22px 14px;
+  border-bottom: 1px solid var(--his-border);
+}
+
+.el-dialog__title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.el-dialog__body {
+  padding: 20px 22px;
+}
+
+.el-dialog__footer {
+  padding: 14px 22px 18px;
+  border-top: 1px solid var(--his-border);
+}
+
+.el-tag {
+  font-weight: 500;
+}
+
+.el-tabs__header {
+  margin-bottom: 16px;
+}
+
+.el-tabs__nav-wrap::after {
+  height: 1px;
+  background: var(--his-border);
+}
+
+.el-input__wrapper,
+.el-select__wrapper,
+.el-textarea__inner {
+  box-shadow: 0 0 0 1px var(--his-border) inset;
+}
+
+.el-descriptions__label {
+  color: var(--his-text-muted);
+}
+
+.el-empty {
+  padding: 18px 0;
+}
+
+@media (max-width: 720px) {
+  .page-head h2 {
+    font-size: 20px;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+}

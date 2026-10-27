@@ -1,0 +1,59 @@
+# ============================================================
+# GitHub Actions 工作流：每次 push 自动跑测试 + 前端构建
+# 路径必须放在 .github/workflows/ 下，GitHub 才会识别
+# 作用：推送即验证，测试不通过就挡在门外，不让坏代码上线
+# ============================================================
+name: CI
+
+# 触发时机：任何分支的 push，以及 Pull Request
+on: [push, pull_request]
+
+jobs:
+  # ---------- 任务 1：后端测试 ----------
+  backend-test:
+    runs-on: ubuntu-latest
+    steps:
+      # ① 拉取仓库代码
+      - uses: actions/checkout@v4
+
+      # ② 安装 Node 18（和后端 Dockerfile 保持一致）
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # ③ 按 lock 文件精确安装依赖
+      - run: npm ci
+
+      # ④ 后台启动后端，再跑 48 项自动化测试（功能 + 安全 RBAC）
+      - name: 启动后端并运行测试
+        env:
+          # 模拟生产环境：必须配强 JWT_SECRET，顺带验证生产配置能正常启动
+          NODE_ENV: production
+          JWT_SECRET: ci_test_secret_12345678901234567890
+        run: |
+          node src/server.js &
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:3000/api/health > /dev/null; then break; fi
+            sleep 1
+          done
+          node task4/run-tests.js
+
+  # ---------- 任务 2：前端构建 ----------
+  frontend-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # 安装依赖（工作目录切换到 his-frontend）
+      - name: 安装前端依赖
+        working-directory: his-frontend
+        run: npm ci
+
+      # 打包生产版本（vite build），失败则构建不通过
+      - name: 前端生产构建
+        working-directory: his-frontend
+        run: npm run build

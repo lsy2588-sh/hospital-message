@@ -1,0 +1,13 @@
+# 构建镜像时排除这些文件/目录，让 COPY . . 更干净、镜像更小
+node_modules
+.env
+*.log
+.git
+.gitignore
+PATIENT_TOKEN
+*.pid
+task4
+ecosystem.config.js
+his-frontend
+.idea
+.vscode

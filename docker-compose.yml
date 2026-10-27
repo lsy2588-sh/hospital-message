@@ -1,0 +1,40 @@
+# ============================================================
+# docker-compose.yml —— 一个文件统一管理所有容器，一条命令全部启动
+# 启动命令：docker compose up --build
+# ============================================================
+#
+# 说明：本项目数据层为「内存 mockDb」（无 MySQL/SQLite），
+# 因此只有 backend / frontend 两个服务，没有 db 服务。
+# 重启容器后数据会重置，属项目设计约定。
+
+services:
+  # ---------- 后端服务 ----------
+  backend:
+    # 用根目录的 Dockerfile 构建镜像
+    build: .
+    container_name: his-backend
+    environment:
+      # 生产环境必须配强 JWT_SECRET（>= 32 位随机串），否则后端拒绝启动
+      NODE_ENV: production
+      PORT: 3000
+      JWT_SECRET: CHANGE_ME_TO_A_RANDOM_STRING_AT_LEAST_32_CHARS
+      JWT_EXPIRES_IN: 7d
+      RATE_LIMIT_MAX: 20
+    # 把容器 3000 端口映射到宿主机 3000（本地可直接 curl 后端）
+    ports:
+      - "3000:3000"
+    # 崩溃自动重启
+    restart: unless-stopped
+
+  # ---------- 前端服务 ----------
+  frontend:
+    # 用 his-frontend 目录里的 Dockerfile 构建
+    build: ./his-frontend
+    container_name: his-frontend
+    # 等后端先启动再启动前端
+    depends_on:
+      - backend
+    # 把容器 80 端口映射到宿主机 80（浏览器直接访问 http://localhost）
+    ports:
+      - "80:80"
+    restart: unless-stopped

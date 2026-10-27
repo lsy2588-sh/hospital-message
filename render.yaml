@@ -1,0 +1,19 @@
+# Render Blueprint：把后端一键部署到 Render（免费层，HTTPS）
+# 用法：在 Render 控制台 New → Blueprint → 关联 GitHub 仓库，自动识别此文件
+services:
+  - type: web
+    name: his-backend
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      # JWT_SECRET 让 Render 自动生成随机密钥，不进代码仓库
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: RATE_LIMIT_MAX
+        value: "20"
