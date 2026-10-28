@@ -1,5 +1,6 @@
 const mockDb = require('../models/mockDb');
 const User = require('../models/User');
+const auditLog = require('../models/auditLog');
 const { genId } = require('../utils/idGenerator');
 const { success, fail } = require('../utils/response');
 const { deptName, doctorName } = require('../utils/helpers');
@@ -334,10 +335,23 @@ const listUsers = (req, res) => {
   success(res, list.map(User.toSafe));
 };
 
+// 查询审计日志（可按用户名/角色/方法/状态码筛选，默认最新在前）
+const listAuditLogs = (req, res) => {
+  const { username, role, method, status_code, limit } = req.query;
+  let list = auditLog.list();
+  if (username) list = list.filter((l) => l.username === username);
+  if (role) list = list.filter((l) => l.role === role);
+  if (method) list = list.filter((l) => l.method === method.toUpperCase());
+  if (status_code !== undefined) list = list.filter((l) => String(l.status_code) === String(status_code));
+  const n = parseInt(limit, 10);
+  if (Number.isInteger(n) && n > 0) list = list.slice(0, n);
+  success(res, list);
+};
+
 module.exports = {
   listDepartments, createDepartment, updateDepartment, deleteDepartment,
   listDoctors, createDoctor, updateDoctor, deleteDoctor,
   listSchedules, createSchedule, updateSchedule, deleteSchedule,
   listDrugs, createDrug, updateDrug, deleteDrug,
-  listUsers,
+  listUsers, listAuditLogs,
 };

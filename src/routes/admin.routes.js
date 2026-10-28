@@ -27,4 +27,6 @@ router.delete('/drugs/:id', ctrl.deleteDrug);
 
 router.get('/users', ctrl.listUsers);
 
+router.get('/audit-logs', ctrl.listAuditLogs);
+
 module.exports = router;
